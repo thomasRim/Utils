@@ -14,6 +14,7 @@
 
 // Image
 + (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)size;
++ (void)roundImage:(UIImage *)image forImageView:(UIImageView *)imageView;
 + (void)loadImageUrl:(NSString*)imageUrl toImageView:(UIImageView*)imageView;
 + (NSString *)stringBase64FromImage:(UIImage *)image;
 + (UIImage *)imageFromBase64String:(NSString *)base64String

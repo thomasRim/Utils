@@ -21,12 +21,33 @@ static const float K_IMAGE_QUALITY = 0.3f;
 
 #pragma mark - Image
 
-+ (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)size {
++ (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)size
+{
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
+}
+
++ (void)roundImage:(UIImage *)image forImageView:(UIImageView *)imageView
+{
+    float diameter = MIN(image.size.width, image.size.height);
+    UIImage *imageSq = [Utils resizeImage:image toSize:CGSizeMake(diameter, diameter)];
+
+    CALayer *imageLayer = [CALayer layer];
+    imageLayer.frame = CGRectMake(0, 0, imageSq.size.width, imageSq.size.height);
+    imageLayer.contents = (id) imageSq.CGImage;
+
+    imageLayer.masksToBounds = YES;
+    imageLayer.cornerRadius = diameter / 2;
+
+    UIGraphicsBeginImageContext(imageSq.size);
+    [imageLayer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *roundedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    imageView.image = roundedImage;
 }
 
 + (void)loadImageUrl:(NSString*)imageUrl toImageView:(UIImageView*)imageView
@@ -74,12 +95,14 @@ static const float K_IMAGE_QUALITY = 0.3f;
     }
 }
 
-+ (NSString *)stringBase64FromImage:(UIImage *)image {
++ (NSString *)stringBase64FromImage:(UIImage *)image
+{
     return [UIImageJPEGRepresentation(image, K_IMAGE_QUALITY)
             base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
 
-+ (UIImage *)imageFromBase64String:(NSString *)base64String {
++ (UIImage *)imageFromBase64String:(NSString *)base64String
+{
     NSData *data = [[NSData alloc]
                     initWithBase64EncodedString:base64String
                     options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -152,7 +175,8 @@ static const float K_IMAGE_QUALITY = 0.3f;
 
 #pragma mark - Storyboard
 
-+ (void)initiateStoryboard:(NSString *)storyboard {
++ (void)initiateStoryboard:(NSString *)storyboard
+{
     UIViewController *controller = [UIViewController new];
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard bundle:nil];
@@ -164,7 +188,8 @@ static const float K_IMAGE_QUALITY = 0.3f;
     }
 }
 
-+ (id)initialController:(NSString *)storyboard {
++ (id)initialController:(NSString *)storyboard
+{
     id controller = nil; //[UIViewController new];
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard bundle:nil];
@@ -174,7 +199,8 @@ static const float K_IMAGE_QUALITY = 0.3f;
     return controller;
 }
 
-+ (id)controllerFrom:(NSString *)storyboard withID:(NSString *)controllerId {
++ (id)controllerFrom:(NSString *)storyboard withID:(NSString *)controllerId
+{
     id controller = nil; //[UIViewController new];
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard bundle:nil];
