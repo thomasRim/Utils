@@ -21,7 +21,7 @@
 
 // Date
 + (NSString*)stringFromDate:(NSDate*)date format:(NSString*)format;
-+ (NSDate*)dateFromDtring:(NSString*)dateString format:(NSString*)format;
++ (NSDate*)dateFromString:(NSString*)dateString format:(NSString*)format;
 + (NSString*)calculateTimeAgoForDate:(NSDate*)date;
 
 // Storyboard
