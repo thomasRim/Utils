@@ -177,7 +177,7 @@ static const float K_IMAGE_QUALITY = 0.3f;
 
 + (void)initiateStoryboard:(NSString *)storyboard
 {
-    UIViewController *controller = [UIViewController new];
+    UIViewController *controller = nil;
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard bundle:nil];
     if (sb) {
